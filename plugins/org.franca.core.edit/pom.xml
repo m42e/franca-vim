@@ -14,4 +14,7 @@
 	<packaging>eclipse-plugin</packaging>
 	<build>
 	</build>
+	<properties>
+		<skip.deployment>false</skip.deployment>
+	</properties>
 </project>
