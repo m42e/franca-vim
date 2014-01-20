@@ -19,4 +19,7 @@
 			<version>4.8.1</version>
 		</dependency>
 	</dependencies>
+	<properties>
+		<skip-deployment>true</skip-deployment>
+	</properties>
 </project>

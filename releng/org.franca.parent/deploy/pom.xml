@@ -12,30 +12,7 @@
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
-    <modules>
-    		<module>..</module> <!--  build org.franca.parent/pom.xml -->
-            <module>../../../plugins/org.franca.connectors.dbus</module>
-            <module>../../../plugins/org.franca.connectors.dbus.ui</module>
-            <module>../../../plugins/org.franca.core</module>
-            <module>../../../plugins/org.franca.core.dsl</module>
-            <module>../../../plugins/org.franca.core.dsl.ui</module>
-            <module>../../../plugins/org.franca.core.edit</module>
-            <module>../../../plugins/org.franca.core.ui.addons</module>
-            <module>../../tests/org.franca.core.dsl.tests.base</module>
-            <module>../../tests/org.franca.core.dsl.tests</module>
-    </modules>
-    <build>
-	    <pluginManagement>
-	    	<plugins>
-	    	    <!-- Overwrite the parent.pom: Do NOT consult property 'skip-deployment'. Instead, do ALWAYS skip -->
-	    		<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-deploy-plugin</artifactId>
-					<configuration>
-					  <skip>true</skip>
-					</configuration>
-				</plugin>
-	    	</plugins>
-	    </pluginManagement>
-	</build>
+    <properties>
+    		<skip-deployment>true</skip-deployment>
+	</properties>
 </project>

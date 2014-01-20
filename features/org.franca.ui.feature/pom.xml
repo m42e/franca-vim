@@ -10,4 +10,7 @@
 
 	<artifactId>org.franca.ui.feature</artifactId>
 	<packaging>eclipse-feature</packaging>
+	<properties>
+		<skip-deployment>true</skip-deployment>
+	</properties>
 </project>

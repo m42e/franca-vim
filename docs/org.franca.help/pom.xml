@@ -12,4 +12,7 @@
 	<version>0.8.1-SNAPSHOT</version>
 	<packaging>eclipse-plugin</packaging>
 
+	<properties>
+		<skip-deployment>true</skip-deployment>
+	</properties>
 </project>

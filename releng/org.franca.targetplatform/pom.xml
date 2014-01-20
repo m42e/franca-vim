@@ -41,4 +41,7 @@
 		</plugins>
 	</build>
 
+	<properties>
+		<skip-deployment>true</skip-deployment>
+	</properties>
 </project>

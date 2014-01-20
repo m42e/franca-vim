@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>org.franca.parent.dev</artifactId>
+	<artifactId>org.franca.parent.module</artifactId>
 	<packaging>pom</packaging>
 
 	<parent>
@@ -11,6 +11,10 @@
 		<version>0.8.11-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
+	
+	<properties>
+    		<skip-deployment>true</skip-deployment>
+	</properties>
 	
    <modules>
     		<!-- target platform -->

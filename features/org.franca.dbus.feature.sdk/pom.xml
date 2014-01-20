@@ -10,4 +10,7 @@
 
 	<artifactId>org.franca.dbus.feature.sdk</artifactId>
 	<packaging>eclipse-feature</packaging>
+	<properties>
+		<skip-deployment>true</skip-deployment>
+	</properties>
 </project>

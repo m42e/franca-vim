@@ -10,4 +10,7 @@
 
 	<artifactId>org.franca.releng.updatesite</artifactId>
 	<packaging>eclipse-update-site</packaging>
+	<properties>
+		<skip-deployment>true</skip-deployment>
+	</properties>
 </project>
