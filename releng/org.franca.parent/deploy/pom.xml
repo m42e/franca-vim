@@ -21,9 +21,8 @@
             <module>../../../plugins/org.franca.core.dsl.ui</module>
             <module>../../../plugins/org.franca.core.edit</module>
             <module>../../../plugins/org.franca.core.ui.addons</module>
-            <module>../../../plugins/org.franca.deploymodel.dsl</module>
-            <module>../../../plugins/org.franca.deploymodel.dsl.ui</module>
-			<module>../../../plugins/org.franca.generators</module>
+            <module>../../tests/org.franca.core.dsl.tests.base</module>
+            <module>../../tests/org.franca.core.dsl.tests</module>
     </modules>
     <build>
 	    <pluginManagement>
