@@ -18,6 +18,7 @@
 	
    <modules>
     		<!-- target platform -->
+    		<module>../../../releng/org.franca.parent</module>
             <module>../../../releng/org.franca.targetplatform</module>
     		<!-- actual code modules -->
             <module>../../../plugins/org.franca.core</module>
