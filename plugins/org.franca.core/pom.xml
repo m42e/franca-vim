@@ -100,7 +100,4 @@
 			</plugin>
 		</plugins>
 	</build>
-	<properties>
-		<skip.deployment>false</skip.deployment>
-	</properties>
 </project>

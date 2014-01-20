@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>org.franca.parent.deploy</artifactId>
+	<packaging>pom</packaging>
+
+	<parent>
+		<groupId>org.franca</groupId>
+		<artifactId>org.franca.parent</artifactId>
+		<version>0.8.11-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+
+    <modules>
+    		<module>..</module> <!--  build org.franca.parent/pom.xml -->
+            <module>../../../plugins/org.franca.connectors.dbus</module>
+            <module>../../../plugins/org.franca.connectors.dbus.ui</module>
+            <module>../../../plugins/org.franca.core</module>
+            <module>../../../plugins/org.franca.core.dsl</module>
+            <module>../../../plugins/org.franca.core.dsl.ui</module>
+            <module>../../../plugins/org.franca.core.edit</module>
+            <module>../../../plugins/org.franca.core.ui.addons</module>
+            <module>../../../plugins/org.franca.deploymodel.dsl</module>
+            <module>../../../plugins/org.franca.deploymodel.dsl.ui</module>
+			<module>../../../plugins/org.franca.generators</module>
+    </modules>
+    <build>
+	    <pluginManagement>
+	    	<plugins>
+	    	    <!-- Overwrite the parent.pom: Do NOT consult property 'skip-deployment'. Instead, do ALWAYS skip -->
+	    		<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-deploy-plugin</artifactId>
+					<configuration>
+					  <skip>true</skip>
+					</configuration>
+				</plugin>
+	    	</plugins>
+	    </pluginManagement>
+	</build>
+</project>
