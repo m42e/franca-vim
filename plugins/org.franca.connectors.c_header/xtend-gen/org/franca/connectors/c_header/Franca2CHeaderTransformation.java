@@ -8,6 +8,7 @@ import org.franca.core.franca.FAttribute;
 import org.franca.core.franca.FBasicTypeId;
 import org.franca.core.franca.FEnumerationType;
 import org.franca.core.franca.FEnumerator;
+import org.franca.core.franca.FExpression;
 import org.franca.core.franca.FField;
 import org.franca.core.franca.FInterface;
 import org.franca.core.franca.FMethod;
@@ -218,20 +219,11 @@ public class Franca2CHeaderTransformation {
   public String genFEnumerator(final FEnumerator enumerator) {
     String _name = enumerator.getName();
     String _xifexpression = null;
-    boolean _and = false;
-    String _value = enumerator.getValue();
+    FExpression _value = enumerator.getValue();
     boolean _notEquals = (!Objects.equal(_value, null));
-    if (!_notEquals) {
-      _and = false;
-    } else {
-      String _value_1 = enumerator.getValue();
-      boolean _isEmpty = _value_1.isEmpty();
-      boolean _not = (!_isEmpty);
-      _and = (_notEquals && _not);
-    }
-    if (_and) {
-      String _value_2 = enumerator.getValue();
-      String _plus = (" = " + _value_2);
+    if (_notEquals) {
+      FExpression _value_1 = enumerator.getValue();
+      String _plus = (" = " + _value_1);
       _xifexpression = _plus;
     } else {
       _xifexpression = "";

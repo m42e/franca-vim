@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.xtext.naming.IQualifiedNameProvider;
 import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.validation.Check;
+import org.eclipse.xtext.validation.CheckMode;
 import org.eclipse.xtext.validation.ValidationMessageAcceptor;
 import org.franca.core.FrancaModelExtensions;
 import org.franca.core.ImportedModelInfo;
@@ -26,13 +27,17 @@ import org.franca.core.dsl.validation.internal.ValidationHelpers;
 import org.franca.core.dsl.validation.internal.ValidationMessageReporter;
 import org.franca.core.dsl.validation.internal.ValidatorRegistry;
 import org.franca.core.framework.FrancaHelpers;
+import org.franca.core.franca.FAnnotation;
+import org.franca.core.franca.FAnnotationType;
 import org.franca.core.franca.FArgument;
 import org.franca.core.franca.FAssignment;
 import org.franca.core.franca.FBroadcast;
+import org.franca.core.franca.FCompoundInitializer;
 import org.franca.core.franca.FCompoundType;
 import org.franca.core.franca.FConstantDef;
 import org.franca.core.franca.FContract;
 import org.franca.core.franca.FEnumerationType;
+import org.franca.core.franca.FEnumerator;
 import org.franca.core.franca.FGuard;
 import org.franca.core.franca.FInterface;
 import org.franca.core.franca.FMethod;
@@ -101,7 +106,8 @@ public class FrancaIDLJavaValidator extends AbstractFrancaIDLJavaValidator
 	
 	@Check
 	public void checkExtensionValidators(FModel model) {
-		for (IFrancaExternalValidator validator : ValidatorRegistry.getValidatorMap().get(getCheckMode())) {
+		CheckMode mode = getCheckMode();
+		for (IFrancaExternalValidator validator : ValidatorRegistry.getValidatorMap().get(mode)) {
 			validator.validateModel(model, getMessageAcceptor());
 		}
 	}
@@ -232,6 +238,21 @@ public class FrancaIDLJavaValidator extends AbstractFrancaIDLJavaValidator
 	}
 
 	@Check
+	public void checkEnumerationHasEnumerators(FEnumerationType type) {
+		if (type.getEnumerators().isEmpty()) {
+			error("Enumeration must not be empty",
+					type,
+					FrancaPackage.Literals.FMODEL_ELEMENT__NAME, -1);
+		}
+	}
+
+	@Check
+	public void checkCompoundInitializerUnique(FCompoundInitializer ci) {
+		auxValidator.checkCompoundInitializersUnique(ci);
+	}
+
+
+	@Check
 	public void checkMethodFlags(FMethod method) {
 		if (method.isFireAndForget()) {
 			if (!method.getOutArgs().isEmpty()) {
@@ -313,11 +334,17 @@ public class FrancaIDLJavaValidator extends AbstractFrancaIDLJavaValidator
 
 	// *****************************************************************************
 
-	// constant-related checks
+	// type-related checks
 	
 	@Check
 	public void checkConstantDef (FConstantDef constantDef) {
 		TypesValidator.checkConstantType(this, constantDef);
+	}
+
+	@Check
+	public void checkEnumValue (FEnumerator enumerator) {
+		if (enumerator.getValue() != null)
+			TypesValidator.checkEnumValueType(this, enumerator);
 	}
 
 	
@@ -367,6 +394,17 @@ public class FrancaIDLJavaValidator extends AbstractFrancaIDLJavaValidator
 							FrancaPackage.Literals.FTYPE_REF__DERIVED, -1);
 				}
 			}
+		}
+	}
+
+	// *****************************************************************************
+
+	@Check
+	public void checkAnnotationType (FAnnotation annotation) {
+		FAnnotationType type = annotation.getType();
+		if (type==null) {
+			error("Invalid annotation type", annotation,
+					FrancaPackage.Literals.FANNOTATION__RAW_TEXT, -1);
 		}
 	}
 

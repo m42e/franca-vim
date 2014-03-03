@@ -26,6 +26,8 @@ import org.franca.core.franca.FTypeRef
 import org.franca.core.franca.FTypedElement
 import org.franca.core.franca.FUnaryOperation
 import org.franca.core.franca.FrancaFactory
+import org.franca.core.franca.FDoubleConstant
+import org.franca.core.franca.FFloatConstant
 import org.franca.core.utils.FrancaModelCreator
 
 import static org.franca.core.FrancaModelExtensions.*
@@ -38,8 +40,10 @@ class TypeSystem {
 	val FrancaModelCreator francaModelCreator = new FrancaModelCreator
 	
 	public static val BOOLEAN_TYPE = getBooleanType
-	static val INTEGER_TYPE = getIntegerType
-	static val STRING_TYPE = getStringType
+	public static val INTEGER_TYPE = getIntegerType
+	public static val STRING_TYPE = getStringType
+	static val FLOAT_TYPE = getFloatType
+	static val DOUBLE_TYPE = getDoubleType
 	
 	var IssueCollector collector
 	
@@ -55,6 +59,8 @@ class TypeSystem {
 		switch (expr) {
 			FBooleanConstant: if (expected.checkIsBoolean(loc, feat)) BOOLEAN_TYPE else null
 			FIntegerConstant: if (expected.checkIsInteger(loc, feat)) INTEGER_TYPE else null
+			FFloatConstant: if (expected.checkIsFloat(loc, feat)) FLOAT_TYPE else null
+			FDoubleConstant: if (expected.checkIsDouble(loc, feat)) DOUBLE_TYPE else null
 			FStringConstant:  if (expected.checkIsString(loc, feat)) STRING_TYPE else null
 			default: {
 				addIssue("invalid type of constant value (expected " +
@@ -145,15 +151,25 @@ class TypeSystem {
 			if (expected==null) {
 				result
 			} else {
-				if (isCompatibleType(expected, result)) {
-					result
+				if (expected.isEnumeration && result.isEnumeration) {
+					// expr is an enumerator value, check if its type is as expected
+					val iset = getInheritationSet(expected.derived)
+					if (iset.contains(result.derived))
+						result
+					else
+						null
 				} else {
-					addIssue("invalid type (is " +
-						FrancaHelpers::getTypeString(result) + ", expected " +
-						FrancaHelpers::getTypeString(expected) + ")",
-						loc, feat
-					)
-					null
+					// default: check type compatibility
+					if (isCompatibleType(expected, result)) {
+						result
+					} else {
+						addIssue("invalid type (is " +
+							FrancaHelpers::getTypeString(result) + ", expected " +
+							FrancaHelpers::getTypeString(expected) + ")",
+							loc, feat
+						)
+						null
+					}
 				}
 			}
 		}
@@ -236,6 +252,34 @@ class TypeSystem {
 		ok
 	}	
 
+	def private checkIsFloat (FTypeRef expected, EObject loc, EStructuralFeature feat) {
+		if (expected==null)
+			return true
+
+		val ok = expected.isFloat
+		if (!ok) {
+			addIssue("invalid type (is Float, expected " +
+				FrancaHelpers::getTypeString(expected) + ")",
+				loc, feat
+			)
+		}
+		ok
+	}
+
+	def private checkIsDouble (FTypeRef expected, EObject loc, EStructuralFeature feat) {
+		if (expected==null)
+			return true
+
+		val ok = expected.isDouble
+		if (!ok) {
+			addIssue("invalid type (is Double, expected " +
+				FrancaHelpers::getTypeString(expected) + ")",
+				loc, feat
+			)
+		}
+		ok
+	}
+	
 	def private checkIsString (FTypeRef expected, EObject loc, EStructuralFeature feat) {
 		if (expected==null)
 			return true
@@ -259,9 +303,19 @@ class TypeSystem {
 		return false
 	}
 	
+	/**
+	 * Checks if type "type" can be used as a replacement of type "reference".
+	 */
 	def static isCompatibleType(FTypeRef reference, FTypeRef type) {
-		return (isOfCompatiblePrimitiveType(reference, type)) ||
-			(reference.derived != null && getInheritationSet(type.derived).contains(reference.derived))
+		if (isOfCompatiblePrimitiveType(reference, type))
+			return true
+		
+		if (reference.derived==null || type.derived==null)
+			return false
+		
+		// all other derived types
+		val bases = getInheritationSet(type.derived)
+		return bases.contains(reference.derived)
 	}
 
 	def static isSameType (FTypeRef t1, FTypeRef t2) {
@@ -274,6 +328,22 @@ class TypeSystem {
 		
 		// TODO: we should be more specific here depending on the actual value
 		predefined = FBasicTypeId::INT32
+		it
+	}
+	
+	def private static getFloatType (/*FIntegerConstant value*/) {
+		val it = FrancaFactory::eINSTANCE.createFTypeRef
+		
+		// TODO: we should be more specific here depending on the actual value
+		predefined = FBasicTypeId::FLOAT
+		it
+	}
+	
+	def private static getDoubleType (/*FIntegerConstant value*/) {
+		val it = FrancaFactory::eINSTANCE.createFTypeRef
+		
+		// TODO: we should be more specific here depending on the actual value
+		predefined = FBasicTypeId::DOUBLE
 		it
 	}
 

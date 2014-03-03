@@ -39,9 +39,11 @@ import org.franca.core.franca.FTypeDef
 import org.franca.core.franca.FTypeRef
 import org.franca.core.franca.FUnionType
 import org.franca.core.franca.FrancaPackage
+import org.franca.core.franca.FTypeCollection
 
 import static org.franca.core.framework.TransformationIssue.*
 import static org.franca.core.framework.FrancaModelMapper.*
+import static extension org.franca.core.utils.ExpressionEvaluator.*
 
 class Franca2DBusTransformation {
 	
@@ -65,7 +67,7 @@ class Franca2DBusTransformation {
 		//println("transformInterface: " + src.name)
 
 		// map metadata of interface
-		name = mInterfaceName = src.name
+		name = mInterfaceName = src.model.name + "." + src.name
 		if (src.version!=null)
 			version = "" + src.version.major + "." + src.version.minor
 		//doc = src.comment
@@ -251,7 +253,7 @@ class Franca2DBusTransformation {
 		val Map<FEnumerator, Integer> values = newHashMap
 		var i = 0
 		for(e : src.enumerators) {
-			val v = e.parseEnumValue
+			val v = e.computeEnumValue
 			if (v!=null) {
 				if (v <= i) {
 					addIssue(IMPORT_WARNING, e,
@@ -267,24 +269,26 @@ class Franca2DBusTransformation {
 		values
 	}
 
-	// TODO: remove this function after enumerators have integer values instead of strings
-    def private Integer parseEnumValue (FEnumerator e) {
+    def private Integer computeEnumValue (FEnumerator e) {
     	if (e.value==null) {
     		null
     	} else {
-    		try {
-	    		val v = Long::decode(e.value).intValue
-	    		if (v<0)
-	    			null
-	    		else
-	    			new Integer(v)
-    		}
-    		catch (NumberFormatException ex) {
+			val v = e.value.evaluateIntegerOrParseString
+			if (v==null) {
 				addIssue(IMPORT_WARNING, e,
 					FrancaPackage::FENUMERATOR__VALUE,
 					"Invalid value for enumerator '" + e.name + "', must be integer.")
-    			null
-    		}
+				null
+			} else {
+	    		if (v.intValue<0) {
+					addIssue(IMPORT_WARNING, e,
+						FrancaPackage::FENUMERATOR__VALUE,
+						"Invalid negative value for enumerator '" + e.name + "'.")
+	    			null
+	    		}
+	    		else
+	    			new Integer(v.intValue)
+			}
     	}
     }
 
@@ -424,8 +428,12 @@ class Franca2DBusTransformation {
 		if (src.derived!=null)
 			src.derived.name
 		else
-			src.predefined.name
+			src.predefined.getName()
 	}
+		
+	private def model (FTypeCollection it) {
+		eContainer as FModel
+	} 	
 }
 
 

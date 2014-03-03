@@ -239,7 +239,7 @@ public class CHeaderVisitor extends ASTVisitor {
 		for (IASTEnumerator e : enumeration.getEnumerators()) {
 			FEnumerator enumerator = FrancaFactory.eINSTANCE.createFEnumerator();
 			enumerator.setName(e.getName().toString());
-			enumerator.setValue(e.getValue().toString());
+			//enumerator.setValue(e.getValue().toString());
 			enumerationType.getEnumerators().add(enumerator);
 		}
 		return enumerationType;

@@ -118,7 +118,7 @@ class Franca2CHeaderTransformation {
 	}
 	
 	def String genFEnumerator(FEnumerator enumerator) {
-		enumerator.name + if (enumerator.value != null && !enumerator.value.empty) " = " + enumerator.value else ""
+		enumerator.name + if (enumerator.value != null) " = " + enumerator.value else ""
 	}
 	
 	def String genFField(FField field) {
