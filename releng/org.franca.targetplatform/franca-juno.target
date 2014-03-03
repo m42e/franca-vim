@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="Franca Target Platform - Eclipse 4.2" sequenceNumber="42">
+<?pde version="3.8"?><target name="Franca Target Platform - Eclipse 4.2" sequenceNumber="43">
 <locations>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="de.itemis.xtext.antlr.sdk.feature.group" version="2.0.0.v201108011202"/>
 <unit id="de.itemis.xtext.antlr.feature.feature.group" version="2.0.0.v201108011202"/>
 <repository location="http://download.itemis.com/updates/releases/"/>
 </location>
-<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.jdt.junit.runners.feature.feature.group" version="0.1.0.201308221506"/>
 <unit id="org.xpect.sdk.feature.group" version="0.1.0.201401101421"/>
 <repository location="http://www.xpect-tests.org/updatesite/nightly/"/>
@@ -42,23 +42,6 @@
 <repository location="http://update.eclemma.org/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.mylyn_feature.feature.group" version="3.10.0.20131010-2023"/>
-<unit id="org.eclipse.mylyn.context_feature.feature.group" version="3.10.0.20131007-1529"/>
-<unit id="org.eclipse.mylyn.hudson.feature.group" version="1.2.0.20131006-0226"/>
-<unit id="org.eclipse.mylyn.ide_feature.feature.group" version="3.10.0.20131008-0520"/>
-<unit id="org.eclipse.mylyn.java_feature.feature.group" version="3.10.0.20131008-2202"/>
-<unit id="org.eclipse.mylyn.pde_feature.feature.group" version="3.10.0.20131008-0520"/>
-<unit id="org.eclipse.mylyn.team_feature.feature.group" version="3.10.0.20130816-2152"/>
-<unit id="org.eclipse.mylyn.bugzilla_feature.feature.group" version="3.10.0.20131024-1218"/>
-<unit id="org.eclipse.mylyn.trac_feature.feature.group" version="3.10.0.20130926-1945"/>
-<unit id="org.eclipse.mylyn.git.feature.group" version="1.2.0.20130704-2112"/>
-<unit id="org.eclipse.mylyn.commons.feature.group" version="3.10.0.20131007-0130"/>
-<unit id="org.eclipse.mylyn.commons.identity.feature.group" version="1.2.0.20130704-2116"/>
-<unit id="org.eclipse.mylyn.commons.notifications.feature.group" version="1.2.0.20131017-1131"/>
-<unit id="org.eclipse.mylyn.commons.repositories.feature.group" version="1.2.0.20130704-2116"/>
-<repository location="http://download.eclipse.org/mylyn/releases/latest"/>
-</location>
-<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.emf.compare.feature.group" version="2.1.0.201306101322"/>
 <repository location="http://download.eclipse.org/releases/kepler/"/>
 </location>
@@ -78,9 +61,22 @@
 <unit id="org.eclipse.xtext.xdoc.feature.feature.group" version="0.1.2.201401061353"/>
 <repository location="http://xdoc4franca-release.eclipselabs.org.codespot.com/git/update_site/releases"/>
 </location>
-
-
-
+<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.mylyn.commons.repositories.feature.group" version="1.3.0.20140218-2251"/>
+<unit id="org.eclipse.mylyn.commons.notifications.feature.group" version="1.3.0.20140109-1729"/>
+<unit id="org.eclipse.mylyn_feature.feature.group" version="3.11.0.20140218-2247"/>
+<unit id="org.eclipse.mylyn.team_feature.feature.group" version="3.11.0.20140217-1917"/>
+<unit id="org.eclipse.mylyn.context_feature.feature.group" version="3.11.0.20140206-1846"/>
+<unit id="org.eclipse.mylyn.commons.feature.group" version="3.11.0.20140218-0039"/>
+<unit id="org.eclipse.mylyn.pde_feature.feature.group" version="3.11.0.20131021-1909"/>
+<unit id="org.eclipse.mylyn.trac_feature.feature.group" version="3.11.0.20131021-1910"/>
+<unit id="org.eclipse.mylyn.commons.identity.feature.group" version="1.3.0.20131021-1909"/>
+<unit id="org.eclipse.mylyn.java_feature.feature.group" version="3.11.0.20140218-2206"/>
+<unit id="org.eclipse.mylyn.bugzilla_feature.feature.group" version="3.11.0.20140218-2238"/>
+<unit id="org.eclipse.mylyn.hudson.feature.group" version="1.3.0.20131129-1417"/>
+<unit id="org.eclipse.mylyn.git.feature.group" version="1.3.0.20131021-1910"/>
+<repository location="http://download.eclipse.org/mylyn/releases/latest"/>
+</location>
 </locations>
 <environment>
 <nl>en</nl>
