@@ -10,6 +10,8 @@ package org.franca.core.utils;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.lang.ObjectUtils;
+import org.eclipse.emf.common.util.URI;
 import org.franca.core.franca.FArrayType;
 import org.franca.core.franca.FEnumerationType;
 import org.franca.core.franca.FField;
@@ -135,5 +137,33 @@ public class FrancaIDLUtils {
 			System.out.println("Cycles were detected in: " + typesDigraph);
 		}
 		return null;
+	}
+	
+	/**
+	 * Computes the relative-URI from <code>from </code> to <code>to</code>. If the schemes or the first two segments (i.e. quasi-autority, e.g. the 'resource'
+	 * of 'platform:/resource', and the project/plugin name) the aren't equal, this method returns <code>to.toString()</code>.
+	 */
+	public static String relativeURIString(URI from, URI to) {
+		String retVal = to.toString();
+		if (ObjectUtils.equals(from.scheme(), to.scheme())) {
+			int noOfEqualSegments = 0;
+			while (from.segmentCount() > noOfEqualSegments && to.segmentCount() > noOfEqualSegments && from.segment(noOfEqualSegments).equals(to.segment(noOfEqualSegments))) {
+				noOfEqualSegments++;
+			}
+			final boolean urisBelongToSameProject = noOfEqualSegments >= 2; 
+			if (urisBelongToSameProject) {
+				int noOfIndividualSegments = to.segments().length - noOfEqualSegments;
+				if (noOfIndividualSegments > 0) {
+					int goUp = from.segmentCount() - noOfEqualSegments - 1;
+					String[] relativeSegments = new String[noOfIndividualSegments + goUp];
+					for (int i = 0; i < goUp; i++) {
+						relativeSegments[i] = "..";
+					}
+					System.arraycopy(to.segments(), noOfEqualSegments, relativeSegments, goUp, noOfIndividualSegments);
+					retVal = URI.createHierarchicalURI(relativeSegments, null, null).toString();
+				}
+			}
+		}
+		return retVal;
 	}
 }
