@@ -1,8 +1,0 @@
-// a map datatype
-package testcases
-
-typeCollection MyTypes {
-	map MyMap {
-		Int8 to String
-	}
-}

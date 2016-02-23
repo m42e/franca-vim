@@ -1,6 +1,0 @@
-module TestCase {
-	interface TestAttribute {
-		isSignal Boolean;
-		rpm Float;
-	};
-};

@@ -1,3 +1,0 @@
-$ cp -rf fidl.vim ~/.vim/syntax/
-$ mkdir ~/.vim/ftdetect
-$ cp -rf ftdetect ~/.vim/ftdetect/fidl.vim

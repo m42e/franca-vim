@@ -1,9 +1,0 @@
-// a simple union
-package testcases
-
-typeCollection MyTypes {
-	union MyUnion {
-		UInt16 aNumber
-		String aString
-	}
-}

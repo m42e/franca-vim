@@ -1,9 +1,0 @@
-package TestUnion
-interface TestUnionInterface{
-	
-	union MyUnionType {
-		UInt32 first 
-		Int8 second
-		
-	}
-}

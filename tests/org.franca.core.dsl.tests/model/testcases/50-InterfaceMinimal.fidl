@@ -1,5 +1,0 @@
-// minimal interface definition
-package testcases
-
-interface MyInterface {
-}

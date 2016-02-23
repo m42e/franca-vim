@@ -1,8 +1,0 @@
-// a simple struct
-package testcases
-
-typeCollection MyTypes {
-	struct MyStruct {
-		Int8 aMember
-	}
-}
